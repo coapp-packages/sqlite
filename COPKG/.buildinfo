@@ -1,0 +1,59 @@
+#product-info  {
+    product-name: "sqlite";
+    version: "3.7.6.3";
+    original-source-location: "http://sqlite.org/sqlite-amalgamation-3070603.zip";
+    original-source-website: "http://sqlite.org/";
+    license: "Public Domain";
+    packager: "Hamish C";
+}
+
+
+x86 {
+    compiler: vc10-x86;
+     
+    targets: { 
+        // main library
+        "vstudio\Win32\Release\sqlite.dll",
+        "vstudio\Win32\Release\sqlite.lib",
+        "vstudio\Win32\Release\shell.exe",
+        
+    };
+     
+    build-command:@"
+       msbuild /p:Platform=Win32 /p:Configuration=Release vstudio\sqlite.sln
+    ";
+     
+    clean-command:@"
+        cd vstudio
+        attrib -S -H -R *
+        del /Q *.sdf *.suo *.user 2>NUL
+        rmdir /S /Q Win32      2>NUL 
+        rmdir /S /Q ipch      2>NUL 
+        cd ..
+    ";
+};
+
+x64 {
+    compiler: vc10-x64;
+
+    targets: { 
+        // main library
+        "vstudio\x64\Release\sqlite.dll",
+        "vstudio\x64\Release\sqlite.lib",
+        "vstudio\x64\Release\shell.exe",
+        
+    };
+     
+    build-command:@"
+       msbuild /p:Platform=x64 /p:Configuration=Release vstudio\sqlite.sln
+    ";
+     
+    clean-command:@"
+        cd vstudio
+        attrib -S -H -R *
+        del /Q *.sdf *.suo *.user 2>NUL
+        rmdir /S /Q x64        2>NUL
+        rmdir /S /Q ipch      2>NUL 
+        cd ..
+    ";
+};
